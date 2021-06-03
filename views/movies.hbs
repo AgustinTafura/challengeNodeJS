@@ -1,0 +1,20 @@
+      {{#section 'scripts'}}
+        
+
+        {{/section}}
+
+        <div >
+
+            {{#if user}}
+               <h1>Welcome {{user.email}}!</h1>
+
+              <div>
+                <a href="/movies">GET MOVIES</a>
+
+              </div>
+              
+              {{else}}
+              Login to Start
+            {{/if}}
+            
+        </div>
