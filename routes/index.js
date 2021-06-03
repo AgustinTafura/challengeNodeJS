@@ -10,10 +10,7 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/movies',isLoggedIn,  authenticateToken,
-  getMovies
-  // res.render('movies', );
-);
+router.get('/movies?',isLoggedIn,  authenticateToken, getMovies);
 
 
 module.exports = router;

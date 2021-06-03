@@ -4,17 +4,27 @@
         {{/section}}
 
         <div >
+            <div>
+              {{#each movies}}
+                {{!-- <ul>
+                  {{#each this}} --}}
+                  <div>
+                    <ul>
+                    {{#each this.dataValues}}
+                  <li>
+                    {{@key}}
+                     {{this}}
+                  </li>
+                    {{/each}}
 
-            {{#if user}}
-               <h1>Welcome {{user.email}}!</h1>
+                    </ul>
 
-              <div>
-                <a href="/movies">GET MOVIES</a>
+                  </div>
+                  {{!-- {{/each}}
+                </ul> --}}
+              {{/each}}
 
-              </div>
-              
-              {{else}}
-              Login to Start
-            {{/if}}
+            </div>
+
             
         </div>

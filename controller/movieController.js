@@ -3,14 +3,15 @@ const {Movie}  = require('../models/index');
 
 module.exports = {
 
-  getMovies :  async(req, res) => {
+  getMovies :  async(req, res, next) => {
     try {
       console.log(45454)
       const movies = await Movie.findAll({
+        attributes: { exclude: ['id'] }
         // attributes: [],
         // include: [{all: true}],
       })
-      return res.status(201).json({
+      return res.status(201).render('movies',{
         movies
       });
     } catch (error) {
