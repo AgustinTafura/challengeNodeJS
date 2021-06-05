@@ -1,0 +1,43 @@
+{{#section 'scripts'}}
+
+
+{{/section}}
+{{log actors}}
+<div >
+      {{#each actors}}
+      {{#with this.dataValues}}
+        <h5>
+          {{firstName}} {{lastName}}
+        </h5>
+        
+        <div>
+        {{#each Movies}}
+           Movies:  
+          {{#with this.dataValues}}
+           <ul>
+             <li>
+               <a href="/movies/{{id}}"> {{title}} </a>
+           
+             </li>
+           </ul>
+          {{/with}}
+        
+        {{/each}}
+        </div>
+        
+        <div>
+           Episodes: 
+            <ul>
+        {{#each Episodes}}
+          {{#with this.dataValues}}
+              <li>
+                {{title}} 
+              </li>
+          {{/with}}
+        {{/each}}
+            </ul>
+        </div>
+
+      {{/with}}
+      {{/each}}
+</div>

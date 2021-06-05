@@ -1,83 +1,96 @@
-      {{#section 'scripts'}}
-        <script>
+{{#section 'scripts'}}
+<script>
+
+  var clearButton =  document.getElementById('clear')
+  var selectInputs = document.querySelectorAll('select');
+
+  clearButton.addEventListener('click', (e)=>{
+    e.preventDefault()
+    window.location = '/movie'
+  })
+
+
+  {{#if query}}
+    var queries =  {{{json query}}}
+    Object.entries(queries).forEach(([key1, value1]) => {
+      Object.entries(value1).forEach((key2)=>{
+        var elem = document.querySelector(`#${key1} option[value="${key2[1]}"]`)
+        elem.selected = true
+      })
+    });
+  {{/if}}
+
+</script>
 
 
 
-          var clearButton =  document.getElementById('clear')
-          var selectInputs = document.querySelectorAll('select');
+{{/section}}
 
-          clearButton.addEventListener('click', (e)=>{
-            e.preventDefault()
-            window.location = '/movie'
-          })
+{{#if params.id}}
+<a href="/movies">All Movies</a>
+{{else}}
+  <form  action="/movies" method="GET">
+    <div>
+      <label for="sort">sort bt Title</label>
+      <select name="sort[title]" id="sort">
+        <option value="">Select</option>
+        <option value="ASC">Asc</option>
+        <option value="DESC">Desc</option>
+      </select>
+    </div>
+              <div>
+      <label for="filter">filter by Awards</label>
+      <select name="filter[awards]" id="filter">
+        <option value="">Select</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
 
+    <button type="submit" >Apply</button> 
+    <button id="clear" >Clear All</button> 
+  </form>
+<br/>
+<br/>
+{{/if}}
 
-          {{#if query}}
-            var queries =  {{{json query}}}
-            Object.entries(queries).forEach(([key1, value1]) => {
-              Object.entries(value1).forEach((key2)=>{
-                console.log(key1, key2)
-                var elem = document.querySelector(`#${key1} option[value="${key2[1]}"]`)
-                elem.selected = true
-              })
-            });
-          {{/if}}
-
-        </script>
-
-
-
-        {{/section}}
-
-        <form action="/movies" method="GET">
+<div >
+      {{#each movies}}
           <div>
-            <label for="sort">sort bt Title</label>
-            <select name="sort[title]" id="sort">
-              <option value="">Select</option>
-              <option value="ASC">Asc</option>
-              <option value="DESC">Desc</option>
-            </select>
-          </div>
-                    <div>
-            <label for="filter">filter by Awards</label>
-            <select name="filter[awards]" id="filter">
-              <option value="">Select</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
+            <ul>
+              {{#with this.dataValues}}
 
-          <button type="submit" >Apply</button> 
-          <button id="clear" >Clear All</button> 
-        </form>
-
-        <br/>
-         <br/>
-        <div >
-            <div>
-              {{#each movies}}
-                {{!-- <ul>
-                  {{#each this}} --}}
-                  <div>
-                    <ul>
-                    {{#each this.dataValues}}
+                <h5> <a href="/movies/{{id}}">{{title}}</a> </h5>
+            {{params.id}}
+                <ul>
+                  <li> Awards: {{awards}}</li>
+                  <li> Director: {{#with Director.dataValues}} <a href="/directors/{{id}}"> {{firstName}} {{lastName}} </a> {{/with}}</li>
+                  <li> Genre: {{#with Genre.dataValues}} {{name}} {{/with}}</li>
+                  <li> Length: {{length}} mins</li>
                   <li>
-                    {{@key}}
-                     {{this}}
+                    Actors:
+
+                        <ul>
+                      {{#each Actors}}
+                        {{#with this.dataValues}}
+                          <li>
+                        <a href="/actors/{{id}}">{{firstName}} {{lastName}}</a>,
+                          </li>
+
+                        {{/with}}
+                      {{/each}}  
+                        </ul>
+
                   </li>
-                    {{/each}}
 
-                    </ul>
+                </ul>
 
-                  </div>
-                  {{!-- {{/each}}
-                </ul> --}}
-              {{/each}}
+              {{/with}}
+            </ul>
 
-            </div>
-
-            
-        </div>
+          </div>
+      {{/each}}           
+</div>
