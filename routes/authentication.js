@@ -34,14 +34,17 @@ router.get('/login', isNotLoggedIn, (req, res) => {
 })
 
 router.post('/login',passport.authenticate('local.singin',{failureRedirect: '/login'}), (req, res, next) => {
+  var redirectTo = req.session.redirectTo || '/';
+
   var userId = req.user.dataValues.id
   var token = generateAccessToken(userId);
-
-  res.cookie('jwt', token).redirect('/')
+  res.cookie('jwt', token).redirect(redirectTo) //token should be use un headers request
+  delete req.session.redirectTo
 })
 
 router.post('/logout', function(req, res){
   req.logout();
+  delete req.session.redirectTo
   res.redirect('/login');
 });
 

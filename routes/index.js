@@ -10,9 +10,7 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-// router.get('/movies',isLoggedIn,  authenticateToken, getMovies);
-
-router.get('/movies/:id?', getMovies);
+router.get('/movies',isLoggedIn,  authenticateToken, getMovies);
 
 router.get('/actors/:id?', getActors);
 
