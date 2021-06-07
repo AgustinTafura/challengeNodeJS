@@ -1,0 +1,87 @@
+      {{#section 'scripts'}}
+        <script>
+        const directorSelected = document.getElementById('directorId')
+        const inputsNewDirector = document.getElementById('newDirector')
+        const inputsNewDirectorFirstName = document.getElementById('firstName')
+        const inputsNewDirectorLastName = document.getElementById('lastName')
+        
+        directorSelected.addEventListener('change',(e)=>{
+          var valueSelected = e.target.value
+          
+          if (valueSelected) {
+            inputsNewDirector.style.display = 'none';
+            inputsNewDirectorFirstName.required = false;
+            inputsNewDirectorLastName.required = false;
+
+          } else {
+            inputsNewDirector.style.display = 'contents'
+            inputsNewDirectorFirstName.required = true;
+            inputsNewDirectorLastName.required = true;
+          }
+
+        })
+
+        </script>
+
+        {{/section}}
+
+        <div>
+          <h5>Create New Movie</h5>
+          <form action="/movies/store" method="post">
+
+            <div>
+              <label for="title">Title</label>
+              <input type="text" name='title' required>
+            </div>
+
+            <div>
+              <label for="awards">Awards</label>
+              <input type="number" name='awards' min="0" required>
+            </div>
+
+              <div>
+              <label for="releaseDate">Release Date</label>
+              <input type="date" name='releaseDate' required>
+            </div>
+
+            <div>
+              <label for="length">Length (mins)</label>
+              <input type="number" min="0" name='length' required>
+            </div>
+
+            
+            <div>
+              <label for="genreId">Genre</label>
+              <select name="genreId" id="genreId" required>
+                <option value="">Select one</option>
+                {{#each genres}}
+                  {{#with this.dataValues}}
+                  <option value="{{id}}">{{name}}</option>
+                  {{/with}}
+                {{/each}}
+              </select>
+            </div>
+
+            <div>
+              <label for="directorId">Director</label>
+              <select name="directorId" id="directorId">
+                <option value="">New Director</option>
+                {{#each directors}}
+                  {{#with this.dataValues}}
+                  <option value="{{id}}">{{firstName}} {{lastName}}</option>
+                  {{/with}}
+                {{/each}}
+              </select>
+              <span id="newDirector">
+                <label for="firstName">FirstName</label>
+                <input type="text" name="firstName" id="firstName" required>
+                <label for="lastName">LastName</label>
+                <input type="text" name="lastName" id="lastName" required>
+              </span>
+            </div>
+
+            <button type="submit" >Create</button>
+
+          </form>
+            
+        </div>

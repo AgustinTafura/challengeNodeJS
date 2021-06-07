@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const helpers = require('../lib/helpers'); //helper pass encrypt
-const {generateAccessToken} = require('../lib/jwt'); //helper jwb
-const {User}  = require('../models/index');
+const {generateAccessToken} = require('../lib/jwt'); //helper JWT
+const {isLoggedIn, isNotLoggedIn} = require('../lib/auth');
 
 
-const {isLoggedIn,  isNotLoggedIn } = require('../lib/auth');
-
+//Register
 router.get('/register', isNotLoggedIn, (req, res, next) => {
   res.render('auth/register')
   req.session.errors = null;
@@ -15,18 +13,18 @@ router.get('/register', isNotLoggedIn, (req, res, next) => {
 })
 
 router.post('/register', isNotLoggedIn, (req, res, next) => {
-    var redirectTo = req.session.redirectTo || '/';
+  var redirectTo = req.session.redirectTo || '/';
 
   passport.authenticate('local.singup', {
       successRedirect: redirectTo,
       failureRedirect: '/register',
-      successFlash: true,
-      failureFlash: true
     })(req, res, next),
 
   delete req.session.redirectTo
 });
 
+
+//Login
 router.get('/login', isNotLoggedIn, (req, res) => {
   res.render('auth/login');
   req.session.errors = null;
@@ -38,14 +36,28 @@ router.post('/login',passport.authenticate('local.singin',{failureRedirect: '/lo
 
   var userId = req.user.dataValues.id
   var token = generateAccessToken(userId);
-  res.cookie('jwt', token).redirect(redirectTo) //token should be use un headers request
+  res.cookie('jwt', token).redirect(redirectTo) //token should be sotored in memory (frontend) and then use it in header requests
   delete req.session.redirectTo
 })
 
-router.post('/logout', function(req, res){
+
+//Logout
+router.post('/logout', (req, res)=>{
   req.logout();
   delete req.session.redirectTo
   res.redirect('/login');
+});
+
+
+
+//Token
+router.get('/token', isLoggedIn, (req, res, next)=>{
+    const user = req.user
+
+    //Refresh Token
+    const newToken = generateAccessToken(user.id)
+    newToken && res.cookie('jwt', newToken)
+    
 });
 
 

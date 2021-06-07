@@ -6,7 +6,7 @@
 
   clearButton.addEventListener('click', (e)=>{
     e.preventDefault()
-    window.location = '/movie'
+    window.location = '/movies'
   })
 
 
@@ -26,7 +26,7 @@
 
 {{/section}}
 
-{{#if params.id}}
+{{#if query.id}}
 <a href="/movies">All Movies</a>
 {{else}}
   <form  action="/movies" method="GET">
@@ -63,30 +63,32 @@
             <ul>
               {{#with this.dataValues}}
 
-                <h5> <a href="/movies/{{id}}">{{title}}</a> </h5>
-            {{params.id}}
-                <ul>
-                  <li> Awards: {{awards}}</li>
-                  <li> Director: {{#with Director.dataValues}} <a href="/directors/{{id}}"> {{firstName}} {{lastName}} </a> {{/with}}</li>
-                  <li> Genre: {{#with Genre.dataValues}} {{name}} {{/with}}</li>
-                  <li> Length: {{length}} mins</li>
-                  <li>
-                    Actors:
+                <h5> <a href="/movies?id={{id}}">{{title}}</a> </h5>
+                {{#if ../../query.id}}
+                  <ul>
+                    <li> Awards: {{awards}}</li>
+                    <li> Director: {{#with Director.dataValues}} <a href="/directors/{{id}}"> {{firstName}} {{lastName}} </a> {{/with}}</li>
+                    <li> Genre: {{#with Genre.dataValues}} {{name}} {{/with}}</li>
+                    <li> Length: {{length}} mins</li>
+                    <li>
+                      Actors:
 
-                        <ul>
-                      {{#each Actors}}
-                        {{#with this.dataValues}}
-                          <li>
-                        <a href="/actors/{{id}}">{{firstName}} {{lastName}}</a>,
-                          </li>
+                          <ul>
+                        {{#each Actors}}
+                          {{#with this.dataValues}}
+                            <li>
+                          <a href="/actors/{{id}}">{{firstName}} {{lastName}}</a>,
+                            </li>
 
-                        {{/with}}
-                      {{/each}}  
-                        </ul>
+                          {{/with}}
+                        {{/each}}  
+                          </ul>
 
-                  </li>
+                    </li>
 
-                </ul>
+                  </ul>
+                {{else}}
+                {{/if}}
 
               {{/with}}
             </ul>
