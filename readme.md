@@ -28,6 +28,7 @@ npm install --save-dev sequelize-cli
 - Create DB
 
 ```bash
+npx sequelize-cli db:create
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
 ```

@@ -11,7 +11,7 @@ var exphbs  = require('express-handlebars'); // view engine
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
 
 var app = express();
 require('./lib/passport');
@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
 app.use(require('./routes/authentication'));
 
 // catch 404 and forward to error handler
