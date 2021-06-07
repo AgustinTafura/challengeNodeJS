@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
 router.get('/movies/',isLoggedIn, getMovies);
 // router.get('/movies/create',isLoggedIn, createMovie);
 router.get('/movies/create',isLoggedIn, authenticateToken, createMovie);
-
 router.post('/movies/store', storeMovie);
 
 

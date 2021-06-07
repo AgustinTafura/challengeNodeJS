@@ -2,6 +2,7 @@
 
 
 {{/section}}
+<h2>DIRECTORS</h2>
 <div >
       {{#each directors}}
       {{#with this.dataValues}}
@@ -15,7 +16,7 @@
         {{#each Movies}}
           {{#with this.dataValues}}
              <li>
-               <a href="/movies/{{id}}"> {{title}} </a>
+               <a href="/movies?id={{id}}"> {{title}} </a>
            
              </li>
           {{/with}}

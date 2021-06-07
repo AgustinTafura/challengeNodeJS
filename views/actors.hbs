@@ -2,7 +2,7 @@
 
 
 {{/section}}
-{{log actors}}
+<h2>ACTORS</h2>
 <div >
       {{#each actors}}
       {{#with this.dataValues}}
@@ -16,7 +16,7 @@
           {{#with this.dataValues}}
            <ul>
              <li>
-               <a href="/movies/{{id}}"> {{title}} </a>
+               <a href="/movies?id={{id}}"> {{title}} </a>
            
              </li>
            </ul>

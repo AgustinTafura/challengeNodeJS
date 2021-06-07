@@ -1,9 +1,0 @@
-1 clone
-2 npm install
-
-DB create
-
-3 npm install --save-dev sequelize-cli 
-4 npx sequelize-cli db:migrate
-5 npx sequelize-cli db:seed:all
-
