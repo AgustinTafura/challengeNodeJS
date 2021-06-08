@@ -25,9 +25,11 @@ npm install
 npm install --save-dev sequelize-cli
 ```
 
-- Create DB
+- Create DB (MySQL)
 
 ```bash
+
+# Set DB config (config/config.json )
 npx sequelize-cli db:create
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
